@@ -10,7 +10,7 @@
 	<body>
 		<div class="row">
 			<div class="form-head col-8">
-				<img src="imgs/logo_sample.png" class="logo" />
+				<img src="/imgs/logo_sample.png" class="logo" />
 				<h1 class="title">Yasiks</h1>
 				<h3 class="desc">
 					Food delivery order group matching system<br>
@@ -18,18 +18,19 @@
 				</h3>
 			</div>
 			<div class='col-3'>
-				<form action="/home" class="login-form">
+				<form action="/signin/auth" class="login-form" method="POST" onsubmit="return makeHash();">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email address</label>
-						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+						<label for="exampleInputUsername1">Username</label>
+						<input type="text" class="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp" placeholder="Enter username" name="username">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
 					</div>
 					<button type="submit" class="btn btn-primary submit signin">Sign In</button>
 				</form>
-				<a href="/home" class="btn submit signin" data-toggle="modal" data-target="#signupForm">Sign Up</a>
+				<!--<a href="/signup" class="btn submit signin" data-toggle="modal" data-target="#signupForm">Sign Up</a>-->
+				<a href="/signup" class="btn submit signin">Sign Up</a>
 			</div>
 		</div>
 
@@ -67,5 +68,16 @@
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/login.js"></script>
+		<script src="/js/jquery.js"></script>
+    	<script src="/js/sha512.js"></script>
+	    <script>
+	        function makeHash()
+	        {
+	            let password = $('#exampleInputPassword1').val();
+	            let hash = sha512(password);
+	            $('#exampleInputPassword1').val(hash);
+	            return true;
+	        }
+	    </script>
 	</body>
 </html>
