@@ -23,10 +23,10 @@ router.route('/dev').get(redirector.getDev);*/
 
 router.route('/signup/req').post(signup.postSignUp);
 
-/*router.route('/signin/auth').post(signin.postSignIn);
+router.route('/signin/auth').post(signin.postSignIn);
 router.route('/signin/fail').get(redirector.getSignInFail);
 
-router.route('/chat/enter').post(chat.enterRoom);
+/*router.route('/chat/enter').post(chat.enterRoom);
 router.route('/chat/:roomID').get(redirector.getChat);
 router.route('/chat/:roomID/bind/calendar').get(calendar.bindCalendar);
 router.route('/chat/get/enter/roomlist').get(chat.getEnterRoomList);

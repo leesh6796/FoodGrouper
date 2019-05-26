@@ -1,52 +1,71 @@
 <!DOCTYPE html>
-
 <html>
+  <head>
+		<title><%=title%></title>
+		<link rel='stylesheet' href='/css/bootstrap.min.css' />
+		<link rel='stylesheet' href='/css/fontawesome.min.css' />
+		<link rel='stylesheet' href='/css/common.css' />
+		<link rel='stylesheet' href='/css/login.css' />
+	</head>
+	<body>
+		<div class="row">
+			<div class="form-head col-8">
+				<img src="imgs/logo_sample.png" class="logo" />
+				<h1 class="title">Yasiks</h1>
+				<h3 class="desc">
+					Food delivery order group matching system<br>
+					For KAIST Dormitorians
+				</h3>
+			</div>
+			<div class='col-3'>
+				<form action="/home" class="login-form">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary submit signin">Sign In</button>
+				</form>
+				<a href="/home" class="btn submit signin" data-toggle="modal" data-target="#signupForm">Sign Up</a>
+			</div>
+		</div>
 
-<head>
-    <title><%= title %></title>
-    <link type="text/css" rel="stylesheet" href="/css/signin.css">
-</head>
-
-<body>
-
-    <div id="container">
-        <div id="logo">
-            <img src="/img/logo.jpg" width="100" height="80" alt="No image">
-            <h1>Welcome to KALIV</h1>
-        </div>
-
-        <form method="POST" action="/signin/auth" onsubmit="makeHash()">
-            <div id="msg">
-            <% if(signInFail) { %>
-                <!-- here -->
-                <p>Log-in is failed</p>
-
-            <% } %>
-            </div>
-            <input placeholder="username" type="text" id="username" name="username">
-
-            <input placeholder="password" type="password" id="password" name="password">
-
-            <div id="lower">
-                <input type="submit" value="Sign in">
-                <input type="button" value="Sign up" onclick="location.href='/signup';">
-            </div>
-        </form>
-    </div>
-
-    <script src="/js/jquery.js"></script>
-    <script src="/js/sha512.js"></script>
-
-    <script>
-        function makeHash()
-        {
-            let password = $('#password').val();
-            let hash = sha512(password);
-            $('#password').val(hash);
-            return true;
-        }
-    </script>
-
-</body>
-
+		<!-- Modal -->
+		<div class="modal fade" id="signupForm" tabindex="-1" role="dialog"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="md-form mb-5">
+							<label data-error="wrong" data-success="right" for="orangeForm-name">Name</label>
+							<input type="text" id="signupForm-name" class="form-control validate">
+						</div>
+						<div class="md-form mb-5">
+							<label data-error="wrong" data-success="right" for="orangeForm-email">Email</label>
+							<input type="email" id="signupForm-email" class="form-control validate">
+						</div>
+						<div class="md-form mb-4">
+							<label data-error="wrong" data-success="right" for="orangeForm-pass">Password</label>
+							<input type="password" id="signupForm-pass" class="form-control validate">
+						</div>
+					</div>
+					<div class="modal-footer d-flex">
+						<button class="btn btn-primary">Sign up</button>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<script src="/js/jquery.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/login.js"></script>
+	</body>
 </html>

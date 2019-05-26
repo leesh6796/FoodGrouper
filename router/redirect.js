@@ -8,7 +8,7 @@ module.exports = {
                 {
                     title : 'FoodGrouper main page',
                     username: req.session.username,
-                    userID: req.session.userID,
+                    id: req.session.id,
                 });
         else
         	res.redirect('/signin');
@@ -31,7 +31,7 @@ module.exports = {
     	else
     		res.render('signin.html',
                 {
-                    title : 'KALIV Login',
+                    title : 'FoodGrouper Login',
                     signInFail: true
                 });
     },
