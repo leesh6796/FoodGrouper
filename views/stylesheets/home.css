@@ -1,0 +1,13 @@
+.user-form{
+	height: 90vh;
+	text-align: center;
+	padding-top: 15vh;
+	padding-right: 0px;
+}
+
+.new-room{
+	position: absolute;
+	bottom: 30vh;
+	width: 80%;
+	left: 15%
+}

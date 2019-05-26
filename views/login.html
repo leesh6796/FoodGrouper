@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>Yasiks</title>
+		<link rel='stylesheet' href='module/css/bootstrap.min.css' />
+		<link rel='stylesheet' href='module/css/fontawesome.min.css' />
+		<link rel='stylesheet' href='stylesheets/common.css' />
+		<link rel='stylesheet' href='stylesheets/login.css' />
+	</head>
+	<body>
+		<div class="row">
+			<div class="form-head col-8">
+				<img src="imgs/logo_sample.png" class="logo" />
+				<h1 class="title">Yasiks</h1>
+				<h3 class="desc">
+					Food delivery order group matching system<br>
+					For KAIST Dormitorians
+				</h3>
+			</div>
+			<div class='col-3'>
+				<form action="/home" class="login-form">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary submit signin">Sign In</button>
+				</form>
+				<a href="/home" class="btn submit signin" data-toggle="modal" data-target="#signupForm">Sign Up</a>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="signupForm" tabindex="-1" role="dialog"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="md-form mb-5">
+							<label data-error="wrong" data-success="right" for="orangeForm-name">Name</label>
+							<input type="text" id="signupForm-name" class="form-control validate">
+						</div>
+						<div class="md-form mb-5">
+							<label data-error="wrong" data-success="right" for="orangeForm-email">Email</label>
+							<input type="email" id="signupForm-email" class="form-control validate">
+						</div>
+						<div class="md-form mb-4">
+							<label data-error="wrong" data-success="right" for="orangeForm-pass">Password</label>
+							<input type="password" id="signupForm-pass" class="form-control validate">
+						</div>
+					</div>
+					<div class="modal-footer d-flex">
+						<button class="btn btn-primary">Sign up</button>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="module/js/bootstrap.min.js"></script>
+		<script src="src/login.js"></script>
+	</body>
+</html>

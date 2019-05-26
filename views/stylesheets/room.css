@@ -1,0 +1,88 @@
+.user-icon{
+	width:inherit;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.chat{
+	height:90vh;
+	border:solid 3px black;
+	margin: 0px
+}
+
+.order-info{
+	text-align:center;
+}
+
+.order-info .btn{
+	margin: 5px;
+	width: 80%;
+}
+
+#restaurant{
+	margin-top: 5px;
+}
+#price{
+	margin-top: 15vh;
+	margin-bottom: 5vh;
+	display: inline-block;
+}
+
+.order{
+	height: 30vh;
+	border: solid black 2px;
+	padding: 5px;
+	margin: 5px;
+	margin-bottom: 5vh;
+}
+
+.order > div{
+	border-bottom: solid black 1px;
+	margin: 5px;
+}
+
+.order > div > div{
+	font-weight: bold;
+}
+
+.chat-icon{
+	height: 40px;
+}
+
+.list-item{
+	list-style: none;
+}
+
+.my-chat{
+	text-align: right;
+	padding: 5px;
+	width: 100%;
+}
+
+.your-chat{
+	text-align: left;
+	padding: 5px;
+	width: 100%;
+}
+
+.chat-log{
+	padding: 0;
+	height: 80vh;
+	margin: 0;
+}
+
+.chat-box{
+	height: 8vh;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+
+.chat-input{
+	border: solid black 1px;
+	height: 100%;
+	padding: 5px;
+}
+.chat-submit{
+	height: 100%;
+	width: 100%;
+}
