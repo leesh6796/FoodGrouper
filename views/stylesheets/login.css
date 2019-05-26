@@ -1,0 +1,21 @@
+.form-head{
+	height: 100vh;
+	border-right: solid 5px black;
+	text-align: center;
+	padding: 20px;
+	div{
+		display: inline-block;
+	}
+}
+
+.logo{
+	height: 200px;
+	width: auto;
+	display: inline-block;
+	margin-top: 15vh;
+	margin-bottom: 15vh;
+}
+
+.login-form{
+	margin-top: 15vh
+}
