@@ -30,6 +30,7 @@ module.exports = {
 			});
 		});
 	},
+	
 	getLogout : function(req, res)
 	{
 		if(req.session.signin)
