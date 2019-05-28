@@ -3,6 +3,7 @@ var express = require('express');
 var redirector = require('./redirect');
 var signup = require('./signup');
 var signin = require('./signin');
+var room = require('./room');
 /*var chat = require('./chat');
 var calendar = require('./calendar');
 var dev = require('./dev');*/
@@ -25,6 +26,10 @@ router.route('/signup/req').post(signup.postSignUp);
 
 router.route('/signin/auth').post(signin.postSignIn);
 router.route('/signin/fail').get(redirector.getSignInFail);
+
+router.route('/room/create').post(room.postCreateRoom);
+router.route('/room/delete/:roomID').get(room.getDeleteRoom);
+router.route('/room/join/:roomID').get(room.getJoinRoom);
 
 /*router.route('/chat/enter').post(chat.enterRoom);
 router.route('/chat/:roomID').get(redirector.getChat);
