@@ -58,11 +58,15 @@ CREATE TABLE IF NOT EXISTS `Dish` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`restaurant`) REFERENCES `Restaurant`(`id`));
     
-CREATE TABLE IF NOT EXISTS `Order` (
+CREATE TABLE IF NOT EXISTS `Orders` (
 	`id` INT NOT NULL AUTO_INCREMENT,
+    `userID` INT NOT NULL,
     `roomID` INT NOT NULL,
     `dishID` INT NOT NULL,
     `amount` INT NOT NULL,
     PRIMARY KEY (`id`),
+    FOREIGN KEY (`userID`) REFERENCES `User`(`id`),
     FOREIGN KEY (`roomID`) REFERENCES `Room`(`roomID`),
     FOREIGN KEY (`dishID`) REFERENCES `Dish`(`id`));
+
+CREATE TABLE IF NOT EXISTS `Orders` (`id` INT NOT NULL AUTO_INCREMENT, `userID` INT NOT NULL, `roomID` INT NOT NULL, `dishID` INT NOT NULL, `amount` INT NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`userID`) REFERENCES `User`(`id`), FOREIGN KEY (`roomID`) REFERENCES `Room`(`roomID`), FOREIGN KEY (`dishID`) REFERENCES `Dish`(`id`));
