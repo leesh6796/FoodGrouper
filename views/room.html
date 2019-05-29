@@ -20,20 +20,23 @@
 				<div id="restaurant"></div>
 				<div id="dorm"></div>
 				<div id="price"></div>
-				<div class="container order"></div>
-				<a href="#" class="btn btn-secondary"><h3>Change my order</h3></a>
-				<a href="#" class="btn btn-primary disabled" ><h3>Order Now</h3></a>
+				<div class="container" id="order"></div>
+				<a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#change-order-modal"><h3>Change my order</h3></a>
+				<a href="#" class="btn btn-primary disabled"><h3 id="maycall">Cannot Order Yet</h3></a>
+				<!-- <a href="#" class="btn btn-primary disabled"><h3 id="maycall">Call 010GARROSH</h3></a> -->
 			</div>
 			<div class="col-7 chat">
 				<ul class="chat-log">
 					<li class="list-item">
 						<div class="my-chat">
-							<h4>I will buy U <span class="chat-icon dot"></span></h4>
+							<h4 class="chat-text">I will buy U</h4>
+							<div class="chat-icon dot">SJ</div>
 						</div>
 					</li>
 					<li class="list-item">
 						<div class="your-chat">
-							<h4><span class="dot"></span> Thanks, prof.</h4>
+							<div class="chat-icon dot">KZ</div>
+							<h4 class="chat-text">Thanks Prof</h4>
 						</div>
 					</li>
 				</ul>
@@ -45,35 +48,49 @@
 				</div>
 			</div>
 			<div class="col-1">
-				<img src="imgs/user_a.png" class="user-icon">
-				<img src="imgs/user_b.png" class="user-icon" >
-				<img src="imgs/nouser.png" class="user-icon" >
-				<img src="imgs/nouser.png" class="user-icon" >
+				<div class="chat-icon dot">SJ</div>
+				<div class="chat-icon dot">KZ</div>
+				<img src="imgs/nouser.png" class="user-icon">
+				<img src="imgs/nouser.png" class="user-icon">
 			</div>
 		</div>
 
 		<!-- Order Change Modal -->
-		<div class="modal fade" id="create-room-modal" tabindex="-1" role="dialog" aria-labelledby="Create new order group" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Create New Room</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<select>
-							<option value="none">-Choose restaurant</option>
-						</select>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Create</button>
+		<div class="modal fade" id="change-order-modal" tabindex="-1" role="dialog" aria-labelledby="change my order" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Create New Room</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h4>Restaurant : <span id="modal-restaurant">MARU</span></h4>
+							<h4>Where to Receive : <span id="modal-restaurant">Himang</span></h4>
+							<div style="margin-top:24px;padding-left:15px;">
+								<h5>Price Lowbound : <span id="min-price">12000</span> won</h5>
+							</div>
+							<div id="menu">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="dish1">
+									<label class="form-check-label" for="dish1">Tuna DopBap</label>
+									<span class="price">4000 won</span>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="dish2" checked="true">
+									<label class="form-check-label" for="dish2">Yakiniku DopBap</label>
+									<span class="price">4000 won</span>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Create</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
 		<script src="/js/socket.io.js"></script>
