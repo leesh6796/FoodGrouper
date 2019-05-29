@@ -32,14 +32,15 @@
 	margin: 5px;
 	margin-bottom: 5vh;
 }
-
 #order > div{
 	border-bottom: solid black 1px;
 	margin: 5px;
 }
-
 #order > div > div{
 	font-weight: bold;
+}
+#order .close{
+	color: #df3924;
 }
 
 .list-item{
