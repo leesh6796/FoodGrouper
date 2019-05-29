@@ -1,0 +1,55 @@
+a:hover{
+	color: black;
+	text-decoration: none;
+}
+
+.user-form{
+	height: 90vh;
+	text-align: center;
+	padding-top: 15vh;
+	padding-right: 0px;
+}
+.new-room{
+	position: absolute;
+	bottom: 30vh;
+	width: 80%;
+	left: 15%
+}
+
+.box{
+	box-sizing: border-box;
+	margin-left: 5vw;
+	margin-top: 15px;
+	padding: 15px;
+	border: solid black 2px;
+	border-radius: 13px;
+	color: black;
+}
+.box:hover{
+	background-color: #cfcfff;
+}
+.room-owner{
+	margin-top: 7px;
+}
+.restaurant{
+	font-weight: bold;
+	font-size: 17px;
+	width: 13vw;
+}
+.dorm{
+	font-size: 15px;
+	font-weight: bold;
+}
+.order-info div{
+	display: block;
+}
+
+
+#menu{
+	padding: 15px;
+}
+
+.form-check{
+	border-bottom: solid black 1px;
+	height: 30px;
+}

@@ -22,8 +22,12 @@
 #restaurant{
 	margin-top: 5px;
 }
+#dorm{
+	margin-top: 8vh;
+	display: inline-block;
+}
 #price{
-	margin-top: 15vh;
+	margin-top: 5vh;
 	margin-bottom: 5vh;
 	display: inline-block;
 }

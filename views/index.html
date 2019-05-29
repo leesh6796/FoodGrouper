@@ -5,7 +5,7 @@
 		<link rel='stylesheet' href='/css/bootstrap.min.css' />
 		<link rel='stylesheet' href='/css/font-awesome.min.css' />
 		<link rel='stylesheet' href='/css/common.css' />
-		<link rel='stylesheet' href='/css/home.css' />
+		<link rel='stylesheet' href='/css/index.css' />
 	</head>
 	<body>
 		<nav class="navbar navbar-light bg-light">
@@ -15,36 +15,48 @@
 		</nav>
 		<div class="row">
 			<div class="col-4 user-form">
-				<h2> Koo Bonchan</h2><br>
-				<label for="phone-number">Phone</label><h5 id="phone-number"> 01053874275</h5>
-				<label for="dorm">Dorm</label><h5 id="dorm"> Munji </h5>
+				<h2 id="nickname"> Koo Bonchan</h2><br>
+				<label for="phone-number">Phone</label><h5 id="phone-number">01053874275</h5>
 				<a href="/room" class="btn btn-primary new-room" data-toggle="modal" data-target="#create-room-modal"><h3>Create New Room</h3></a>
 			</div>
 			<div class="col">
-				<div class="list-group">
-					<a href="/room/BangJe" class="list-group-item list-group-item-action flex-column align-items-start">
-						<div class="d-flex w-100 justify-content-between">
-							<h4> BangJe</h4>
-							<small>SJ Hyun</small>
-		 				</div>
-						<div class="price"><div class="restaurant">MARU</div> 8000 / <span class="min-price">12000</span></div>
-					</a>
-					<a href="/room/BangJay" class="list-group-item list-group-item-action flex-column align-items-start">
-						<div class="d-flex w-100 justify-content-between">
-							<h4> BangJay</h4>
-							<small>SJ Hyun</small>
-		 				</div>
-						
-						<div class="price"><div class="restaurant">MARU</div> 8000 / <span class="min-price">12000</span></div>
-					</a>
-					<a href="/room/BangJest" class="list-group-item list-group-item-action flex-column align-items-start">
-						<div class="d-flex w-100 justify-content-between">
-							<h4> BangJest</h4>
-							<small>SJ Hyun</small>
-		 				</div>
-						
-						<div class="price"><div class="restaurant">MARU</div> 8000 / <span class="min-price">12000</span></div>
-					</a>
+				<div class="container">
+					<div class="row order-list">
+						<a href="/room/BangJay" class="col-5 box">
+							<div class="d-flex w-100 justify-content-between">
+								<h4> BangJay</h4>
+								<small class="room-owner">SJ Hyun</small>
+							</div>
+							<div class="order-info justify-content-between">
+								<div class="restaurant">MARU</div>
+								<div class="dorm">Himang Dorm</div>
+								<div>8000 / <span class="min-price">12000</span></div>
+							</div>
+						</a>
+						<a href="/room/BangJay" class="col-5 box">
+							<div class="d-flex w-100 justify-content-between">
+								<h4> BangJay</h4>
+								<small class="room-owner">SJ Hyun</small>
+							</div>
+							<div class="order-info justify-content-between">
+								<div class="restaurant">MARU</div>
+								<div class="dorm">Himang Dorm</div>
+								<div>8000 / <span class="min-price">12000</span></div>
+							</div>
+						</a>
+						<a href="/room/BangJay" class="col-5 box">
+							<div class="d-flex w-100 justify-content-between">
+								<h4> BangJay</h4>
+								<small class="room-owner">SJ Hyun</small>
+							</div>
+							<div class="order-info justify-content-between">
+								<div class="restaurant">MARU</div>
+								<div class="dorm">Himang Dorm</div>
+								<div>8000 / <span class="min-price">12000</span></div>
+							</div>
+						</a>
+
+					</div>
 				</div>
 			</div>
 		</div>
@@ -65,6 +77,12 @@
 							<option value="none" id="maru">MARU</option>
 							<option value="none" id="dume">DUME</option>
 							<option value="none" id="johns">JOHNS</option>
+						</select>
+						<select class="form-control" id="select-dorm">
+							<option value="none" selected="selected">--- Choose where to receive ---</option>
+							<option value="none" id="maru">Himang</option>
+							<option value="none" id="dume">Munji</option>
+							<option value="none" id="johns">Taxi Stop</option>
 						</select>
 						<div style="margin-top:24px;padding-left:15px;">
 							<h5>Price Lowbound : <span id="min-price">12000</span> won</h5>
@@ -92,6 +110,6 @@
 
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
-		<script src="/js/home.js"></script>
+		<script src="/js/index.js"></script>
 	</body>
 </html>
