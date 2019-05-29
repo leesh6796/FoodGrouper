@@ -11,3 +11,9 @@
 	width: 80%;
 	left: 15%
 }
+
+.restaurant{
+	font-weight: bold;
+	width: 13vw;
+	display: inline-block;
+}
