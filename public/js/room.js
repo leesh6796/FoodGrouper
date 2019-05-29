@@ -73,6 +73,14 @@ $(document).ready(function(){
     socket.emit('join', {roomID: roomID, name: name});
 
     socket.on('change_order', function(params) {
-        console.log('change order');
+        $.get('/order/get/' + roomID, function(results) {
+            console.log(results);
+        }
+    });
+
+    socket.on('chat_member_change', function(params) {
+        $.get('/order/get/' + roomID, function(results) {
+            console.log(results);
+        }
     });
 })
