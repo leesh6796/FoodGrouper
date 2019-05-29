@@ -1,6 +1,6 @@
 $(document).ready(refresh())
 refresh = function(){
-    // http get room - returns room name, restaurant name, room-owner, min price, curr-price, orders(name, dish name, price), dorm
+    // room get from server
     let sample_room = {
         room_id: "0x0fff11",
         room_name: "BangJay",
