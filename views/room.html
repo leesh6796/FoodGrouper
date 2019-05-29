@@ -15,20 +15,9 @@
 		</nav>
 		<div class="row">
 			<div class="col-4 order-info">
-				<div id="restaurant"><h1>MARU</h1></div>
-				<div id="price"><h4>8000 / <span class="min-price">12000</span></h4></div>
-				<div class="container order">
-					<div class="row">
-						<div class="col-3">SJ Hyun</div>
-						<div class="col-6">Yakiniku</div>
-						<div class="col-3">4000</div>
-					</div>
-					<div class="row">
-						<div class="col-3">Aebe Cee</div>
-						<div class="col-6">Tuna</div>
-						<div class="col-3">4000</div>
-					</div>
-				</div>
+				<div id="restaurant"></div>
+				<div id="price"></div>
+				<div class="container order"></div>
 				<a href="#" class="btn btn-secondary"><h3>Change my order</h3></a>
 				<a href="#" class="btn btn-primary disabled" ><h3>Order Now</h3></a>
 			</div>
@@ -36,12 +25,12 @@
 				<ul class="chat-log">
 					<li class="list-item">
 						<div class="my-chat">
-							<h4>I will buy U <span><img src="imgs/user_a.png" class="chat-icon"></span></h4>
+							<h4>I will buy U <span class="chat-icon dot"></span></h4>
 						</div>
 					</li>
 					<li class="list-item">
 						<div class="your-chat">
-							<h4><span><img src="imgs/user_b.png" class="chat-icon"></span> Thanks, prof.</h4>
+							<h4><span class="dot"></span> Thanks, prof.</h4>
 						</div>
 					</li>
 				</ul>
@@ -57,6 +46,29 @@
 				<img src="imgs/user_b.png" class="user-icon" >
 				<img src="imgs/nouser.png" class="user-icon" >
 				<img src="imgs/nouser.png" class="user-icon" >
+			</div>
+		</div>
+
+		<!-- Order Change Modal -->
+		<div class="modal fade" id="create-room-modal" tabindex="-1" role="dialog" aria-labelledby="Create new order group" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Create New Room</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<select>
+							<option value="none">-Choose restaurant</option>
+						</select>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Create</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="/js/jquery.js"></script>
