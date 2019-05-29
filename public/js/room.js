@@ -63,6 +63,7 @@ $(document).ready(function(){
     // load to doc
     name = $("#name").val();
     roomID = $("#roomID").val();
+    $.get('/room/join/' + roomID, function(res) { });
     $.get('/room/info/' + roomID, function(res) {
         let room = res[0];
         $('#restaurant').html(`<h1>${room.restaurantName}</h1>`);

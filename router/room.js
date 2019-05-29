@@ -42,7 +42,7 @@ module.exports = {
 				conn.query(query, function(error, results, fields) {
 					if(results.length > 0)
 					{
-						let room = results[0];
+						let room = results[results.length-1];
 						let roomID = room.roomID;
 
 						data = {'userID':{'type':'int', 'val':hostID},
@@ -90,14 +90,24 @@ module.exports = {
 		let roomID = req.params.roomID;
 
 		pool.getConnection(function(err, conn) {
-			data = {'userID':{'type':'int', 'val':userID},
-					'roomID':{'type':'int', 'val':roomID}};
+			query = "select * from Participants where userID=" + userID + " and roomID=" + roomID + ";";
 
-			query = insertGenerator('Participants', data);
 			conn.query(query, function(error, results, fields) {
-				//global.lastUpdated[roomID]["room"] = Date.now();
-				conn.release();
-				res.redirect('/room/' + roomID);
+				if(results !== undefined && results.length > 0)
+				{
+					conn.release();
+				}
+				else
+				{
+					data = {'userID':{'type':'int', 'val':userID},
+							'roomID':{'type':'int', 'val':roomID}};
+
+					query = insertGenerator('Participants', data);
+					conn.query(query, function(error, results, fields) {
+						//global.lastUpdated[roomID]["room"] = Date.now();
+						conn.release();
+					});
+				}
 			});
 		});
 	},
