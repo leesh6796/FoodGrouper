@@ -15,14 +15,14 @@
 		</nav>
 		<div class="row">
 			<div class="col-4 user-form">
-				<h2 id="nickname"> Koo Bonchan</h2><br>
-				<label for="phone-number">Phone</label><h5 id="phone-number">01053874275</h5>
+				<h2 id="nickname"><%=name%></h2><br>
+				<label for="phone-number">Phone</label><h5 id="phone-number"><%=phoneNumber%></h5>
 				<a href="/room" class="btn btn-primary new-room" data-toggle="modal" data-target="#create-room-modal"><h3>Create New Room</h3></a>
 			</div>
 			<div class="col">
 				<div class="container">
 					<div class="row order-list">
-						<a href="/room/BangJay" class="col-5 box">
+						<!--<a href="/room/BangJay" class="col-5 box">
 							<div class="d-flex w-100 justify-content-between">
 								<h4> BangJay</h4>
 								<small class="room-owner">SJ Hyun</small>
@@ -54,7 +54,7 @@
 								<div class="dorm">Himang Dorm</div>
 								<div>8000 / <span class="min-price">12000</span></div>
 							</div>
-						</a>
+						</a>-->
 
 					</div>
 				</div>
@@ -72,22 +72,23 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<select class="form-control" id="select-restaurant">
+						<input type="text" id="room-name" class="form-control validate" name="roomName" placeholder="Please enter a name of room"><br />
+						<select class="form-control" id="select-restaurant" onchange="selectedRestaurantChange(this)">
 							<option value="none" selected="selected">--- Choose restaurant ---</option>
-							<option value="none" id="maru">MARU</option>
+							<!--<option value="none" id="maru">MARU</option>
 							<option value="none" id="dume">DUME</option>
-							<option value="none" id="johns">JOHNS</option>
-						</select>
+							<option value="none" id="johns">JOHNS</option>-->
+						</select><br />
 						<select class="form-control" id="select-dorm">
 							<option value="none" selected="selected">--- Choose where to receive ---</option>
-							<option value="none" id="maru">Himang</option>
+							<!--<option value="none" id="maru">Himang</option>
 							<option value="none" id="dume">Munji</option>
-							<option value="none" id="johns">Taxi Stop</option>
+							<option value="none" id="johns">Taxi Stop</option>-->
 						</select>
 						<div style="margin-top:24px;padding-left:15px;">
-							<h5>Price Lowbound : <span id="min-price">12000</span> won</h5>
+							<h5>Price Lowbound : <span id="min-price"></span> won</h5>
 						</div>
-						<div id="menu">
+						<!--<div id="menu">
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value="" id="dish1">
 								<label class="form-check-label" for="dish1">Tuna DopBap</label>
@@ -98,11 +99,11 @@
 								<label class="form-check-label" for="dish2">Yakiniku DopBap</label>
 								<span class="price">4000 won</span>
 							</div>
-						</div>
+						</div>-->
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" disabled>Create</button>
+						<button type="button" class="btn btn-primary" onclick="createRoom()">Create</button>
 					</div>
 				</div>
 			</div>

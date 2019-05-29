@@ -1,5 +1,6 @@
 var socketio = require('socket.io');
 var pool = require('./pool');
+var _ = require('underscore');
 
 /*
 
@@ -32,9 +33,9 @@ function init(server)
 			}
 
 			// 클라이언트는 join type 받으면, 자기가 가지고 있는 접속자 목록과 비교해 없으면 리스트에 새로 추가한다.
-			/*_.each(clients[roomID], (member) => {
-				io.to(member.sockID).emit('chat_member_change', {type: 'join', chatroom: roomID, nickname: nickname})
-			});*/
+			_.each(clients[roomID], (member) => {
+				io.to(member.sockID).emit('chat_member_change', {});
+			});
 			
 			// clients[roomID]에 접속한 client 추가
 			clients[roomID].push({sockID: socket.id, name: name});

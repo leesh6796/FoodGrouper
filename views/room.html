@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-		<title>Yasiks</title>
+		<title><%=title%></title>
 		<link rel='stylesheet' href='/css/bootstrap.min.css' />
 		<link rel='stylesheet' href='/css/all.css' />
 		<link rel='stylesheet' href='/css/common.css' />
 		<link rel='stylesheet' href='/css/room.css' />
 	</head>
 	<body>
+		<input type="hidden" id="roomID" value="<%=roomID%>" />
+		<input type="hidden" id="name" value="<%=name%>" />
 		<nav class="navbar navbar-light bg-light">
 			<button type="button" class="close" aria-label="Close">
 				<span aria-hidden="true">&times;</span> EXIT
@@ -87,6 +89,7 @@
 		</div>
 		<script src="/js/jquery.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/socket.io.js"></script>
 		<script src="/js/room.js"></script>
 	</body>
 </html>

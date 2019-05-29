@@ -1,3 +1,31 @@
+var dorm = {
+        1 : 'Sarang Hall',
+        2 : 'Somang Hall',
+        3 : 'Jilli Hall',
+        4 : 'Silloe Hall',
+        5 : 'Jihey Hall',
+        6 : 'Areum Hall',
+        7 : 'Sejong Hall',
+        8 : 'Galilei Hall',
+        9 : 'Nanum Hall',
+        10 : 'Heemang / Dasom Hall',
+        11 : 'Mir / Narae Hall',
+        12 : 'Nadl / Yeoul Hall'};
+
+var socket = io();
+var username = "";
+var name = "";
+var roomID;
+
+function updateOrders()
+{
+    let orderBox = $('.order');
+    orderBox.empty();
+    $.get("/order/get/" + roomID, function(res) {
+        console.log(res);
+    });
+}
+
 $(document).ready(function(){
     // room get from server
     let my_name = "Kingzone";
@@ -40,6 +68,28 @@ $(document).ready(function(){
     
     // http get chat(room, curr-time - 1 day) - load chatlist(name, text, timestamp) after time
     // load to doc
+    name = $("#name").val();
+    roomID = $("#roomID").val();
+    $.get('/room/join/' + roomID, function(res) { });
+    $.get('/room/info/' + roomID, function(res) {
+        let room = res[0];
+        $('#restaurant').html(`<h1>${room.restaurantName}</h1>`);
+        $('#dorm').html(`<h4>${dorm[room.dorm]}</h4>`)
+    });
+
+    socket.emit('join', {roomID: roomID, name: name});
+
+    socket.on('change_order', function(params) {
+        $.get('/order/get/' + roomID, function(results) {
+            console.log(results);
+        }
+    });
+
+    socket.on('chat_member_change', function(params) {
+        $.get('/order/get/' + roomID, function(results) {
+            console.log(results);
+        }
+    });
 })
 
 function onMayCall(){

@@ -4,7 +4,7 @@ var room = require('./room');
 
 module.exports = {
 	postAddOrder : function(req, res) {
-		let userID = req.body.userID;
+		let userID = req.session._id;
 		let roomID = req.body.roomID;
 		let dishID = req.body.dishID;
 		let amount = req.body.amount;
