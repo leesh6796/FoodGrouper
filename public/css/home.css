@@ -17,3 +17,19 @@
 	width: 13vw;
 	display: inline-block;
 }
+
+
+.price{
+	float: right;
+	font-size: 20px;
+	margin-top: -2px;
+}
+
+#menu{
+	padding: 15px;
+}
+
+.form-check{
+	border-bottom: solid black 1px;
+	height: 30px;
+}
