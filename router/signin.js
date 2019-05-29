@@ -9,7 +9,7 @@ module.exports = {
 		pool.getConnection(function(err, conn) {
 			if(err) throw err;
 
-			query = "select * from User where username='" + username + "' and password='" + password + "';";
+			query = "select name, phoneNumber, username, id as _id from User where username='" + username + "' and password='" + password + "';";
 			conn.query(query, function(error, results, fields) {
 				if(results.length > 0)
 				{
@@ -18,7 +18,7 @@ module.exports = {
 					req.session.username = username;
 					req.session.name = me.name;
 					req.session.phoneNumber = me.phoneNumber;
-					req.session.id = me.id;
+					req.session._id = me._id;
 					conn.release();
 					res.redirect('/');
 				}

@@ -1,5 +1,6 @@
 var socketio = require('socket.io');
 var pool = require('./pool');
+var _ = require('underscore');
 
 /*
 

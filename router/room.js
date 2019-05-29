@@ -19,10 +19,10 @@ module.exports = {
 
 	postCreateRoom : async function(req, res)
 	{
-		let hostID = req.body.hostID ? global.dev : req.session.id;
+		let hostID = req.session._id;
 		let roomName = req.body.roomName;
-		let restaurant = req.body.restaurant;
-		let dorm = req.body.dorm;
+		let restaurant = Number(req.body.restaurant);
+		let dorm = Number(req.body.dorm);
 
 		pool.getConnection(function(err, conn) {
 			if(err) throw err;
@@ -53,7 +53,7 @@ module.exports = {
 							//global.lastUpdated[roomID] = {"chat":0, "room":0};
 							//global.lastUpdated[roomID]["room"] = Date.now();
 							conn.release();
-							res.redirect('/room/' + roomID);
+							res.send('/room/view/' + roomID);
 						});
 					}
 					else
@@ -86,7 +86,7 @@ module.exports = {
 	},
 
 	getJoinRoom : async function(req, res) {
-		let userID = 2;//2 ? global.dev : req.session.id;
+		let userID = req.session._id;
 		let roomID = req.params.roomID;
 
 		pool.getConnection(function(err, conn) {
@@ -103,7 +103,7 @@ module.exports = {
 	},
 
 	getExitRoom : async function(req, res) {
-		let userID = req.session.id;
+		let userID = req.session._id;
 		let roomID = req.params.roomID;
 
 		pool.getConnection(function(err, conn) {
@@ -115,6 +115,32 @@ module.exports = {
 					conn.release();
 					res.redirect('/');
 				});
+			});
+		});
+	},
+
+	getInfo : function(req, res) {
+		let roomID = req.params.roomID;
+
+		pool.getConnection(function(err, conn) {
+			query = 'SELECT r.*, u.name as hostName, rest.name as restaurantName, rest.minPrice ' +
+					'FROM Room as r ' +
+					'JOIN User AS u ' +
+					'ON r.roomID=' + roomID + ' and r.host = u.id ' +
+					'JOIN Restaurant AS rest ' +
+					'ON r.orderRestaurant=rest.id;';
+			conn.query(query, function(error, results, fields) {
+				console.log(results);
+				if(results !== undefined && results.length > 0)
+				{
+					conn.release();
+					res.send(results);
+				}
+				else
+				{
+					conn.release();
+					res.send("-1");
+				}
 			});
 		});
 	},
@@ -138,10 +164,13 @@ module.exports = {
 
 	getRoomList : function(req, res) {
 		pool.getConnection(function(err, conn) {
-			query = 'SELECT r.*, u.name as hostName ' +
+			query = 'SELECT r.*, u.name as hostName, rest.name as restaurantName, rest.minPrice ' +
 					'FROM Room as r ' +
 					'JOIN User AS u ' +
-					'ON r.orderComplete=0 and r.host = u.id;';
+					'ON r.orderComplete=0 and r.host = u.id ' +
+					'JOIN Restaurant AS rest ' +
+					'ON r.orderRestaurant=rest.id;';
+			console.log(query);
 			conn.query(query, function(error, results, fields) {
 				console.log(results);
 				if(results !== undefined && results.length > 0)
@@ -159,7 +188,7 @@ module.exports = {
 	},
 
 	getMyRoomList : function(req, res) {
-		let userID = req.headers.userid ? global.dev : req.session.id;
+		let userID = req.session._id;
 		pool.getConnection(function(err, conn) {
 			query = 'SELECT p.*, r.* ' +
 					'FROM Participants as p ' +

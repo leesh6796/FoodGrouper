@@ -28,6 +28,7 @@ router.route('/signup/req').post(signup.postSignUp);
 router.route('/signin/auth').post(signin.postSignIn);
 router.route('/signin/fail').get(redirector.getSignInFail);
 
+router.route('/room/view/:roomID').get(redirector.getRoomView);
 router.route('/room/create').post(room.postCreateRoom);
 router.route('/room/delete/:roomID').get(room.getDeleteRoom);
 router.route('/room/join/:roomID').get(room.getJoinRoom);
@@ -35,6 +36,7 @@ router.route('/room/exit/:roomID').get(room.getExitRoom);
 router.route('/room/list').get(room.getRoomList);
 router.route('/room/mylist').get(room.getMyRoomList);
 router.route('/room/dorminfo').get(room.getDormString);
+router.route('/room/info/:roomID').get(room.getInfo);
 router.route('/room/get/participants/:roomID').get(room.getRoomParticipants);
 router.route('/room/lastupdate/:roomID').get(room.getLastUpdate);
 router.route('/room/complete/:roomID').get(room.getCompleteOrder);

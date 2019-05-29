@@ -7,8 +7,9 @@ module.exports = {
         	res.render('index.html',
                 {
                     title : 'FoodGrouper main page',
-                    username: req.session.username,
-                    id: req.session.id,
+                    name: req.session.name,
+                    id: req.session._id,
+                    phoneNumber: req.session.phoneNumber,
                 });
         else
         	res.redirect('/signin');
@@ -42,7 +43,21 @@ module.exports = {
     	else
     		res.render('signup.html', {title : 'FoodGrouper Sign Up'});
     },
-    /*getDevChat : function(req, res)
+    getRoomView : (req, res) =>
+    {
+        if(req.session.signin)
+            res.render('room.html',
+                {
+                    title : 'FoodGrouper main page',
+                    username: req.session.username,
+                    name: req.session.name,
+                    id: req.session._id,
+                    roomID: req.params.roomID
+                });
+        else
+            res.redirect('/signin');
+    }
+    /*getDevChat : function(req, res) 
     {
     	if(req.session.signin)
         	res.render('devchat.html',
