@@ -75,12 +75,12 @@ $(document).ready(function(){
     socket.on('change_order', function(params) {
         $.get('/order/get/' + roomID, function(results) {
             console.log(results);
-        }
+        });
     });
 
     socket.on('chat_member_change', function(params) {
         $.get('/order/get/' + roomID, function(results) {
             console.log(results);
-        }
+        });
     });
 })
