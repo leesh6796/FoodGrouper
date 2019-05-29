@@ -1,21 +1,21 @@
 var pool = require('./pool');
 var insertGenerator = require('./query').insertGenerator;
+var dorm = {
+		1 : 'Sarang Hall',
+		2 : 'Somang Hall',
+		3 : 'Jilli Hall',
+		4 : 'Silloe Hall',
+		5 : 'Jihey Hall',
+		6 : 'Areum Hall',
+		7 : 'Sejong Hall',
+		8 : 'Galilei Hall',
+		9 : 'Nanum Hall',
+		10 : 'Heemang / Dasom Hall',
+		11 : 'Mir / Narae Hall',
+		12 : 'Nadl / Yeoul Hall'}
 
 module.exports = {
-	dorm : {
-		'Sarang Hall' : 1,
-		'Somang Hall' : 2,
-		'Jilli Hall' : 3,
-		'Silloe Hall' : 4,
-		'Jihey Hall' : 5,
-		'Areum Hall' : 6,
-		'Sejong Hall' : 7,
-		'Galilei Hall' : 8,
-		'Nanum Hall' : 9,
-		'Heemang / Dasom Hall' : 10,
-		'Mir / Narae Hall' : 11,
-		'Nadl / Yeoul Hall' : 12
-	},
+	dorm : dorm,
 
 	postCreateRoom : async function(req, res)
 	{
@@ -50,6 +50,8 @@ module.exports = {
 
 						query = insertGenerator('Participants', data);
 						conn.query(query, function(error, results, fields) {
+							//global.lastUpdated[roomID] = {"chat":0, "room":0};
+							//global.lastUpdated[roomID]["room"] = Date.now();
 							conn.release();
 							res.redirect('/room/' + roomID);
 						});
@@ -84,7 +86,7 @@ module.exports = {
 	},
 
 	getJoinRoom : async function(req, res) {
-		let userID = req.headers.userID ? global.dev : req.session.id;
+		let userID = 2;//2 ? global.dev : req.session.id;
 		let roomID = req.params.roomID;
 
 		pool.getConnection(function(err, conn) {
@@ -93,8 +95,123 @@ module.exports = {
 
 			query = insertGenerator('Participants', data);
 			conn.query(query, function(error, results, fields) {
+				//global.lastUpdated[roomID]["room"] = Date.now();
 				conn.release();
 				res.redirect('/room/' + roomID);
+			});
+		});
+	},
+
+	getExitRoom : async function(req, res) {
+		let userID = req.session.id;
+		let roomID = req.params.roomID;
+
+		pool.getConnection(function(err, conn) {
+			query = "delete from Orders where userID=" + userID + " and roomID=" + roomID + ";";
+			conn.query(query, function(error, results, fields) {
+				query = "delete from Participants where userID=" + userID + " and roomID=" + roomID + ";";
+				conn.query(query, function(error, results, fields) {
+					//global.lastUpdated[roomID]["room"] = Date.now();
+					conn.release();
+					res.redirect('/');
+				});
+			});
+		});
+	},
+
+	getRoomParticipants : function(req, res) {
+		let roomID = req.params.roomID;
+
+		pool.getConnection(function(err, conn) {
+			query = 'SELECT p.*, u.name as userName ' +
+					'FROM Participants as p ' +
+					'JOIN User AS u ' +
+					'ON p.roomID=' + roomID + ' and p.userID = u.id;'
+
+			conn.query(query, function(error, results, fields) {
+				conn.release();
+				if(error) res.send("fail");
+				else res.send(results);
+			});
+		});
+	},
+
+	getRoomList : function(req, res) {
+		pool.getConnection(function(err, conn) {
+			query = 'SELECT r.*, u.name as hostName ' +
+					'FROM Room as r ' +
+					'JOIN User AS u ' +
+					'ON r.orderComplete=0 and r.host = u.id;';
+			conn.query(query, function(error, results, fields) {
+				console.log(results);
+				if(results !== undefined && results.length > 0)
+				{
+					conn.release();
+					res.send(results);
+				}
+				else
+				{
+					conn.release();
+					res.send("-1");
+				}
+			});
+		});
+	},
+
+	getMyRoomList : function(req, res) {
+		let userID = req.headers.userid ? global.dev : req.session.id;
+		pool.getConnection(function(err, conn) {
+			query = 'SELECT p.*, r.* ' +
+					'FROM Participants as p ' +
+					'JOIN Room AS r ' +
+					'ON p.userID=' + userID + ' and r.roomID = p.roomID;';
+			conn.query(query, function(error, results, fields) {
+				console.log(results);
+				if(results !== undefined && results.length > 0)
+				{
+					conn.release();
+					res.send(results);
+				}
+				else
+				{
+					conn.release();
+					res.send("-1");
+				}
+			});
+		});
+	},
+
+	getDormString : function(req, res) {
+		res.send(dorm);
+	},
+
+	getLastUpdate : function(req, res) {
+		res.send(global.lastUpdated[req.params.roomID]["room"].toString());
+	},
+
+	getCompleteOrder : function(req, res) {
+		let roomID = req.params.roomID;
+
+		pool.getConnection(function(err, conn) {
+			query = "update Room set orderComplete=1 where roomID=" + roomID + ";";
+			conn.query(query, function(error, results, fields) {
+				query = 'SELECT o.dishID, o.amount, d.price ' +
+						'FROM Orders as o ' +
+						'JOIN Dish AS d ' +
+						'ON o.roomID=' + roomID + ' and o.dishID = d.id;';
+				conn.query(query, function(error, results, fields) {
+					totalPrice = 0;
+					for(let i=0; i<results.length; i++)
+					{
+						totalPrice += results[i].amount * results[i].price;
+					}
+					query = "update Room set totalPrice=" + totalPrice + " where roomID=" + roomID + ";";
+					conn.query(query, function(error, results, fields) {
+						//global.lastUpdated[roomID] = Date.now();
+						conn.release();
+						res.redirect('/room/' + roomID);
+					});
+				});
 			});
 		});
 	},

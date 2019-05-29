@@ -1,0 +1,72 @@
+CREATE TABLE IF NOT EXISTS `User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(30) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `phoneNumber` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC));
+  
+CREATE TABLE IF NOT EXISTS `Room` (
+	`roomID` INT NOT NULL AUTO_INCREMENT,
+    `host` INT NOT NULL,
+    `name` VARCHAR (50) NOT NULL,
+    `totalPrice` INT DEFAULT 0 NOT NULL,
+    `orderRestaurant` INT NOT NULL,
+    `orderComplete` TINYINT(1) DEFAULT 0 NOT NULL,
+    `dorm` INT NOT NULL,
+    PRIMARY KEY (`roomID`),
+    FOREIGN KEY (`host`) REFERENCES `User`(`id`));
+    
+CREATE TABLE IF NOT EXISTS `Chat` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `time` DATETIME NOT NULL,
+    `userID` INT NOT NULL,
+    `roomID` INT NOT NULL,
+    `content` VARCHAR(1024),
+    PRIMARY KEY (`id`),
+	FOREIGN KEY (`userID`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`roomID`) REFERENCES `Room`(`roomID`));
+    
+CREATE TABLE IF NOT EXISTS `Participants` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `userID` INT NOT NULL,
+    `roomID` INT NOT NULL,
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`userID`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`roomID`) REFERENCES `Room`(`roomID`));
+    
+CREATE TABLE IF NOT EXISTS `Restaurant` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(30) NOT NULL,
+    `phoneNumber` VARCHAR(20) NOT NULL,
+    `receiveLocation` VARCHAR(20) NOT NULL,
+    `minPrice` INT NOT NULL,
+    `openTime` VARCHAR(16) NOT NULL,
+    `closeTime` VARCHAR(16) NOT NULL,
+    `openDays` VARCHAR(16) NOT NULL,
+    PRIMARY KEY (`id`));
+    
+ALTER TABLE `Room` ADD CONSTRAINT ORDER_RESTAURANT FOREIGN KEY (`orderRestaurant`) REFERENCES `Restaurant`(`id`);
+
+CREATE TABLE IF NOT EXISTS `Dish` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `restaurant` INT NOT NULL,
+    `name` VARCHAR(30) NOT NULL,
+    `price` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`restaurant`) REFERENCES `Restaurant`(`id`));
+    
+CREATE TABLE IF NOT EXISTS `Orders` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `userID` INT NOT NULL,
+    `roomID` INT NOT NULL,
+    `dishID` INT NOT NULL,
+    `amount` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`userID`) REFERENCES `User`(`id`),
+    FOREIGN KEY (`roomID`) REFERENCES `Room`(`roomID`),
+    FOREIGN KEY (`dishID`) REFERENCES `Dish`(`id`));
+
+CREATE TABLE IF NOT EXISTS `Orders` (`id` INT NOT NULL AUTO_INCREMENT, `userID` INT NOT NULL, `roomID` INT NOT NULL, `dishID` INT NOT NULL, `amount` INT NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`userID`) REFERENCES `User`(`id`), FOREIGN KEY (`roomID`) REFERENCES `Room`(`roomID`), FOREIGN KEY (`dishID`) REFERENCES `Dish`(`id`));

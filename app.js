@@ -20,6 +20,22 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+/*global.lastUpdated = {};
+var pool = require('./router/pool');
+pool.getConnection(function(err, conn) {
+	query = "select * from Room;";
+	conn.query(query, function(error, results, fields) {
+		for(let i=0; i<results.length; i++)
+		{
+			let roomID = results[i].roomID;
+			global.lastUpdated[roomID] = {"chat":0, "room":0};
+			global.lastUpdated[roomID]["chat"] = Date.now();
+			global.lastUpdated[roomID]["room"] = Date.now();
+		}
+		console.log(global.lastUpdated);
+	});
+});*/
+
 //var uri = 'mongodb://localhost:27017/KALIV';
 //global.db = mongoose.createConnection(uri);
 //db.Promise = global.Promise; // mongoose에서 promise를 사용하기 위해 global promise를 mongoose promise에 저장해둔다.
@@ -31,8 +47,8 @@ var server = app.listen(port, function() {
 	console.log('Connected at ' + port.toString());
 });
 
-//var socket = require('./router/socket');
-//global.io = socket(server); // socket.io 객체를 생성해 global에 저장해둔다.
+var socket = require('./router/socket');
+global.io = socket(server); // socket.io 객체를 생성해 global에 저장해둔다.
 
 
 var router = require('./router/router');
