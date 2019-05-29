@@ -49,6 +49,7 @@ roomListRefresh = function() {
         orders.empty();
         //$("#nickname").html(`${user_info.name}`);
         //$("#phoneNumber").html(`${user_info.phoneNumber}`);
+        if(roomList === "-1") return;
         for(let room of roomList){
             orders.append(`<a href="/room/view/${room.roomID}" class="col-5 box">
                                 <div class="d-flex w-100 justify-content-between">

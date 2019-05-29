@@ -11,7 +11,7 @@
 		<input type="hidden" id="roomID" value="<%=roomID%>" />
 		<input type="hidden" id="name" value="<%=name%>" />
 		<nav class="navbar navbar-light bg-light">
-			<button type="button" class="close" aria-label="Close">
+			<button type="button" class="close" aria-label="Close" onclick="exitRoom()">
 				<span aria-hidden="true">&times;</span> EXIT
 			</button>	
 			<a class="navbar-brand" href="#">
@@ -30,7 +30,7 @@
 			</div>
 			<div class="col-7 chat">
 				<ul class="chat-log">
-					<li class="list-item">
+					<!--<li class="list-item">
 						<div class="my-chat">
 							<h4 class="chat-text">I will buy U</h4>
 							<div class="chat-icon dot">SJ</div>
@@ -41,16 +41,17 @@
 							<div class="chat-icon dot">KZ</div>
 							<h4 class="chat-text">Thanks Prof</h4>
 						</div>
-					</li>
+					</li>-->
 				</ul>
 				<div class="row chat-box">
-					<div class="col-9 chat-input"></div>
-					<div class="col-3 chat-submit">
+					<input class="col-9 chat-input" onkeydown="if(event.keyCode == 13) sendMessage()"></input>
+					<div class="col-3 chat-submit" onclick="sendMessage()">
 						<button class="btn btn-primary chat-submit"><h3>send<h3></button>
 					</div>
 				</div>
 			</div>
 			<div class="col-1" id="user-list">
+				<span>Participants</span>
 				<div class="chat-icon dot">SJ</div>
 				<div class="chat-icon dot">KZ</div>
 			</div>
@@ -68,21 +69,14 @@
 					</div>
 					<div class="modal-body">
 						<div id="menu">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="dish1">
-								<label class="form-check-label" for="dish1">Tuna DopBap</label>
-								<span class="price">4000 won</span>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="dish2" checked="true">
-								<label class="form-check-label" for="dish2">Yakiniku DopBap</label>
-								<span class="price">4000 won</span>
-							</div>
+							<select class="form-control" id="select-menu">
+								<option value="none" selected="selected">--- Choose a menu ---</option>
+							</select><br />
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Add</button>
+						<button type="button" class="btn btn-primary" onclick="addOrder()">Add</button>
 					</div>
 				</div>
 			</div>

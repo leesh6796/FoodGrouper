@@ -32,10 +32,12 @@ module.exports = {
 		let roomID = req.params.roomID;
 
 		pool.getConnection(function(err, conn) {
-			query = 'SELECT o.*, u.name as userName ' +
+			query = 'SELECT o.*, o.id as orderID, u.name as userName, d.* ' +
 					'FROM Orders as o ' +
 					'JOIN User AS u ' +
-					'ON o.roomID=' + roomID + ' and o.userID = u.id;'
+					'ON o.roomID=' + roomID + ' and o.userID = u.id ' +
+					'JOIN Dish AS d ' +
+					'ON o.dishID=d.id;';
 
 			conn.query(query, function(error, results, fields) {
 				conn.release();

@@ -16,14 +16,98 @@ var socket = io();
 var username = "";
 var name = "";
 var roomID;
+var room;
 
-function updateOrders()
+function updateOrders(orderList)
 {
-    let orderBox = $('.order');
+    let orderBox = $('#order');
     orderBox.empty();
-    $.get("/order/get/" + roomID, function(res) {
-        console.log(res);
+
+    let totalPrice = 0;
+
+    for(let order of orderList)
+    {
+        let removeBtn = "";
+        if(order.userName === name)
+        {
+            removeBtn = `<button type="button" class="close" aria-label="Close" onclick="removeOrder(` + order.orderID + `);"><span aria-hidden="true">&times;</span></button>`;
+        }
+
+        totalPrice += order.price;
+
+        $('#order').append(` <div class="row">
+                                <div class="col-3">${order.userName}</div>
+                                <div class="col-4">${order.name}</div>
+                                <div class="col-3">${order.price}</div>
+                                <div class="col-1">${removeBtn}</div>
+                            </div>`);
+    }
+
+    $('#price').html(`<h4>Now ${totalPrice} / <span class="min-price">Minimum ${room.minPrice}</span></h4>`);
+
+    if(totalPrice >= room.minPrice)
+    {
+        $('#maycall').html(`Call ${room.phoneNumber}`);
+    }
+    else
+    {
+        $('#maycall').html(`Cannot Order Yet`);
+    }
+}
+
+function updateParticipants(userList)
+{
+    let userListBox = $('#user-list');
+    userListBox.empty();
+    userListBox.append('<div align="center"><span>Participants</span></div>');
+
+    for(let user of userList)
+    {
+        userListBox.append('<div class="chat-icon dot">' + user.userName + '</div>');
+    }
+}
+
+function removeOrder(orderID)
+{
+    $.get('/order/delete/' + orderID, function(res) {
+        socket.emit('change_order', {roomID:roomID});
     });
+}
+
+function exitRoom()
+{
+    if(room.hostName === name)
+    {
+        socket.emit('delete_room', {roomID:roomID});
+        $.get("/room/delete/" + roomID, function(res) {
+            window.location.replace("/");
+        });
+    }
+    else
+    {
+        $.get("/room/exit/" + roomID, function(res) {
+            window.location.replace("/");
+        });
+    }
+}
+
+function addOrder()
+{
+    let dishID = $('#select-menu').val();
+    let amount = 1;
+
+    $.post('/order/add', {'roomID':roomID, 'dishID':dishID, 'amount':amount}, function(res) {
+        socket.emit('change_order', {roomID:roomID});
+    });
+}
+
+function sendMessage()
+{
+    let msg = $('.chat-input').val();
+
+    socket.emit('new_message', {roomID:roomID, name:name, message:msg});
+
+    $('.chat-input').val('');
 }
 
 $(document).ready(function(){
@@ -47,13 +131,13 @@ $(document).ready(function(){
         }],
         dorm: "Himang Dorm"
     };
-    let chat_ls = [];
+    /*let chat_ls = [];
     let room_info = sample_room;
     $('#restaurant').html(`<h1>${room_info.restaurant}</h1>`);
     $('#price').html(`<h4>${room_info.curr_price} / <span class="min-price">${room_info.min_price}</span></h4>`);
-    $('#dorm').html(`<h4>${room_info.dorm}</h4>`)
+    $('#dorm').html(`<h4>${room_info.dorm}</h4>`)*/
 		
-    room_info.orders.forEach((v)=>{
+    /*room_info.orders.forEach((v)=>{
 				var trash = "";
 				if(my_name == v.name) trash = `<button type="button" class="close" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -64,7 +148,7 @@ $(document).ready(function(){
                                 <div class="col-3">${v.price}</div>
                                 <div class="col-1">${trash}</div>
                             </div>`)
-    })
+    });*/
     
     // http get chat(room, curr-time - 1 day) - load chatlist(name, text, timestamp) after time
     // load to doc
@@ -72,34 +156,68 @@ $(document).ready(function(){
     roomID = $("#roomID").val();
     $.get('/room/join/' + roomID, function(res) { });
     $.get('/room/info/' + roomID, function(res) {
-        let room = res[0];
+        room = res[0];
         $('#restaurant').html(`<h1>${room.restaurantName}</h1>`);
-        $('#dorm').html(`<h4>${dorm[room.dorm]}</h4>`)
+        $('#dorm').html(`<h4>${dorm[room.dorm]}</h4>`);
+
+        $.get('/order/get/' + roomID, function(results) {
+            updateOrders(results);
+        });
+
+        $.get('/room/get/participants/' + roomID, function(results) {
+            updateParticipants(results);
+        });
+
+        $.get('/restaurant/get/dish/' + room.orderRestaurant, function(res) {
+            let dishes = $('#select-menu');
+            for(let dish of res)
+            {
+                dishes.append('<option value="' + dish.id + '">' + dish.name + ' (' + dish.price + ' won)</option>');
+            }
+        });
     });
 
     socket.emit('join', {roomID: roomID, name: name});
 
     socket.on('change_order', function(params) {
         $.get('/order/get/' + roomID, function(results) {
-            console.log(results);
+            updateOrders(results);
         });
     });
 
     socket.on('chat_member_change', function(params) {
-        $.get('/order/get/' + roomID, function(results) {
-            console.log(results);
+        $.get('/room/get/participants/' + roomID, function(results) {
+            updateParticipants(results);
         });
     });
-})
 
-function onMayCall(){
-    // called if order constraints are all satisfied
-    // changes order button text into restaurant telephone number
-    let call_num = "010GARROSH"
-    $('#maycall').html(`Call ${call_num}`)
-}
-function onMayCall(){
-    // called if order constraints are not satisfied
-    // changes order button text into restaurant telephone number
-    $('#maycall').html(`Cannot Order Yet`)
-}
+    socket.on('delete_room', function(params) {
+        window.location.replace('/');
+    });
+
+    socket.on('new_message', function(params) {
+        let sender = params.name;
+        let message = params.message;
+        let block;
+
+        if(sender === name)
+        {
+            block = `<li class="list-item">
+                <div class="my-chat">
+                   <h4 class="chat-text">` + message + `</h4>
+                    <div class="chat-icon dot">` + sender + `</div>
+                </div>
+            </li>`;
+        }
+        else
+        {
+            block = `<li class="list-item">
+                <div class="your-chat">
+                    <div class="chat-icon dot">` + sender + `</div>
+                    <h4 class="chat-text">` + message + `</h4>
+                </div>
+            </li>`;
+        }
+        $('.chat-log').append(block);
+    });
+})

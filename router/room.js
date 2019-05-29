@@ -73,10 +73,13 @@ module.exports = {
 
 			query = "delete from Participants where roomID=" + roomID + ";";
 			conn.query(query, function(error, results, fields) {
-				query = "delete from Order where roomID=" + roomID + ";";
+				if(error) console.log(error);
+				query = "delete from Orders where roomID=" + roomID + ";";
 				conn.query(query, function(error, results, fields) {
+					if(error) console.log(error);
 					query = "delete from Room where roomID=" + roomID + ";";
 					conn.query(query, function(error, results, fields) {
+						if(error) console.log(error);
 						conn.release();
 						res.redirect('/');
 					});
@@ -133,7 +136,7 @@ module.exports = {
 		let roomID = req.params.roomID;
 
 		pool.getConnection(function(err, conn) {
-			query = 'SELECT r.*, u.name as hostName, rest.name as restaurantName, rest.minPrice ' +
+			query = 'SELECT r.*, u.name as hostName, rest.name as restaurantName, rest.minPrice, rest.phoneNumber ' +
 					'FROM Room as r ' +
 					'JOIN User AS u ' +
 					'ON r.roomID=' + roomID + ' and r.host = u.id ' +

@@ -31,6 +31,7 @@
 	padding: 5px;
 	margin: 5px;
 	margin-bottom: 5vh;
+	overflow: auto;
 }
 #order > div{
 	border-bottom: solid black 1px;
@@ -59,7 +60,7 @@
 	border-bottom: solid;
 	max-width: calc(100% - 110px);
 }
-.chat-icon{
+/*.chat-icon{
 	border-radius: 50%;
 	display: inline-block;
 	border: solid black 1px;
@@ -68,6 +69,17 @@
 	font-size: 22px;
 	height: 38px;
 	width: 38px;
+	margin: 10px;
+}*/
+.chat-icon{
+	border-radius: 5%;
+	display: inline-block;
+	border: solid black 1px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 22px;
+	height: 38px;
+	/*width: 100px;*/
 	margin: 10px;
 }
 .my-chat{

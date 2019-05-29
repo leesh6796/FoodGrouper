@@ -57,6 +57,18 @@ function init(server)
 			});
 		});
 
+		socket.on('delete_room', async function(params) // 채팅방 퇴장
+		{
+			let roomID = params.roomID;
+
+			clients[roomID] = _.without(clients[roomID], _.findWhere(clients[roomID], {sockID: socket.id}));
+
+			// 클라이언트는 exit type 받으면, 자기가 가지고 있는 접속자 목록과 비교해 있으면 리스트에서 지운다.
+			_.each(clients[roomID], (member) => {
+				io.to(member.sockID).emit('delete_room', {roomID: roomID});
+			});
+		});
+
 		socket.on('disconnect', function() // 퇴장하면서 연결된 채팅방 모두 접속 끊는다.
 		{
 			console.log("[chat] Socket Disconnected id = " + socket.id);
@@ -71,16 +83,16 @@ function init(server)
 
 		socket.on('new_message', async function(params)
 		{
-			let name = params.username;
+			let name = params.name;
 			let roomID = params.roomID;
 			let message = params.message;
 			let timestamp = new Date(Date.now());
 
-			console.log("[chat] [roomID = %s] %s : %s", roomID, nickname, message);
+			console.log("[chat] [roomID = %s] %s : %s", roomID, name, message);
 
 			_.each(clients[roomID], (member) => {
 				// 특정 소켓에게 보낼 때에는 io.to(sockID).emit 사용한다.
-				io.to(member.sockID).emit('new_message', {name: name, text: message, timestamp: timestamp});
+				io.to(member.sockID).emit('new_message', {name: name, message: message, timestamp: timestamp});
 			});
 		});
 
