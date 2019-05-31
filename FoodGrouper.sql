@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `FoodGrouper`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `FoodGrouper` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `FoodGrouper`;
+
+--
 -- Table structure for table `Chat`
 --
 
@@ -103,6 +111,38 @@ LOCK TABLES `Order` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Orders`
+--
+
+DROP TABLE IF EXISTS `Orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `roomID` int(11) NOT NULL,
+  `dishID` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userID` (`userID`),
+  KEY `roomID` (`roomID`),
+  KEY `dishID` (`dishID`),
+  CONSTRAINT `Orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `User` (`id`),
+  CONSTRAINT `Orders_ibfk_2` FOREIGN KEY (`roomID`) REFERENCES `Room` (`roomID`),
+  CONSTRAINT `Orders_ibfk_3` FOREIGN KEY (`dishID`) REFERENCES `Dish` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Orders`
+--
+
+LOCK TABLES `Orders` WRITE;
+/*!40000 ALTER TABLE `Orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Participants`
 --
 
@@ -118,7 +158,7 @@ CREATE TABLE `Participants` (
   KEY `roomID` (`roomID`),
   CONSTRAINT `Participants_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `User` (`id`),
   CONSTRAINT `Participants_ibfk_2` FOREIGN KEY (`roomID`) REFERENCES `Room` (`roomID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,6 +167,7 @@ CREATE TABLE `Participants` (
 
 LOCK TABLES `Participants` WRITE;
 /*!40000 ALTER TABLE `Participants` DISABLE KEYS */;
+INSERT INTO `Participants` VALUES (31,3,11),(33,1,11),(38,2,11),(41,2,15),(42,1,15);
 /*!40000 ALTER TABLE `Participants` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,9 +184,6 @@ CREATE TABLE `Restaurant` (
   `phoneNumber` varchar(20) NOT NULL,
   `receiveLocation` varchar(20) NOT NULL,
   `minPrice` int(11) NOT NULL,
-  `openTime` varchar(16) NOT NULL,
-  `closeTime` varchar(16) NOT NULL,
-  `openDays` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -156,7 +194,7 @@ CREATE TABLE `Restaurant` (
 
 LOCK TABLES `Restaurant` WRITE;
 /*!40000 ALTER TABLE `Restaurant` DISABLE KEYS */;
-INSERT INTO `Restaurant` VALUES (3,'Maru','0428229281','Anywhere',15000,'12:00','20:00','0123456'),(4,'Big Hand Chicken','0428259229','Anywhere',15000,'16:00','24:00','0123456'),(5,'KeunTong Chicken','0428678292','Anywhere',12000,'16:30','24:00','0123456'),(6,'BBQ','0428639292','Anywhere',12000,'14:00','23:00','023456'),(7,'The Journey Pub','0428610800','Anywhere',15000,'17:00','23:00','0123456'),(8,'BHC','0428615958','Anywhere',12000,'17:00','23:00','0123456');
+INSERT INTO `Restaurant` VALUES (3,'Maru','0428229281','Anywhere',15000),(4,'Big Hand Chicken','0428259229','Anywhere',15000),(5,'KeunTong Chicken','0428678292','Anywhere',12000),(6,'BBQ','0428639292','Anywhere',12000),(7,'The Journey Pub','0428610800','Anywhere',15000),(8,'BHC','0428615958','Anywhere',12000);
 /*!40000 ALTER TABLE `Restaurant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,14 +211,13 @@ CREATE TABLE `Room` (
   `name` varchar(50) NOT NULL,
   `totalPrice` int(11) NOT NULL DEFAULT '0',
   `orderRestaurant` int(11) NOT NULL,
-  `orderComplete` tinyint(1) NOT NULL DEFAULT '0',
   `dorm` int(11) NOT NULL,
   PRIMARY KEY (`roomID`),
   KEY `host` (`host`),
   KEY `ORDER_RESTAURANT` (`orderRestaurant`),
   CONSTRAINT `ORDER_RESTAURANT` FOREIGN KEY (`orderRestaurant`) REFERENCES `Restaurant` (`id`),
   CONSTRAINT `Room_ibfk_1` FOREIGN KEY (`host`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,6 +226,7 @@ CREATE TABLE `Room` (
 
 LOCK TABLES `Room` WRITE;
 /*!40000 ALTER TABLE `Room` DISABLE KEYS */;
+INSERT INTO `Room` VALUES (11,3,'BBQ',0,6,6),(15,2,'BHC',0,8,10);
 /*!40000 ALTER TABLE `Room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +246,7 @@ CREATE TABLE `User` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +255,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'leesh6796','fb8426f20a1d6b12992d0307ebe985a60d376d7cff42105eb42afb53b8e1a6166878b1f10a1ee3ee3ba62ff506c61a00edd4a97771080ee8b6702c7edd174e2f','memorial','01082169122');
+INSERT INTO `User` VALUES (1,'leesh6796','fb8426f20a1d6b12992d0307ebe985a60d376d7cff42105eb42afb53b8e1a6166878b1f10a1ee3ee3ba62ff506c61a00edd4a97771080ee8b6702c7edd174e2f','memorial','01082169122'),(2,'mem','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','mem','01000000000'),(3,'tester','d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db','SangHyeonLee','01083123123');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -230,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-29  5:11:18
+-- Dump completed on 2019-05-31 12:59:52

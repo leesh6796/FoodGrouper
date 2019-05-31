@@ -180,7 +180,7 @@ module.exports = {
 			query = 'SELECT r.*, u.name as hostName, rest.name as restaurantName, rest.minPrice ' +
 					'FROM Room as r ' +
 					'JOIN User AS u ' +
-					'ON r.orderComplete=0 and r.host = u.id ' +
+					'ON r.host = u.id ' +
 					'JOIN Restaurant AS rest ' +
 					'ON r.orderRestaurant=rest.id;';
 			console.log(query);
